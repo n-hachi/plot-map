@@ -1,1 +1,2 @@
-#cmakedefine BUILD_VERSION "@BUILD_VERSION@"
+#cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
+#cmakedefine COMMIT_HASH "@COMMIT_HASH@"

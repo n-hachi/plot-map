@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.11)
 # Edit following cproject-name
 project(
     plog-map-client
-    VERSION 1.0
+    VERSION 0.1
     DESCRIPTION "Sample cpp project"
     LANGUAGES CXX
     )

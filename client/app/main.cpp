@@ -10,7 +10,8 @@ std::string appname;
 
 void Usage(void) { std::cout << "Usage: " << appname << std::endl; }
 void Version(void) {
-    std::cout << appname << " " << BUILD_VERSION << std::endl;
+    std::cout << appname << " " << PROJECT_VERSION << std::endl
+              << "commit : " << COMMIT_HASH << std::endl;
 }
 
 int main(int argc, char* argv[]) {
