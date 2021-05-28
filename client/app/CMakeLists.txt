@@ -6,9 +6,29 @@ FetchContent_Declare(
     )
 FetchContent_MakeAvailable(clilib)
 
+# Insert git commit number
+find_package(Git)
+if(GIT_FOUND)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} describe --always --abbrev=40 --dirty
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        OUTPUT_VARIABLE "BUILD_VERSION"
+        ERROR_QUIET
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    MESSAGE( STATUS "Git version: ${BUILD_VERSION}" )
+ELSE(GIT_FOUND)
+    SET(BUILD_VERSION 0)
+ENDIF(GIT_FOUND)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
+
 add_executable(
     plog-map-client.exe
     main.cpp
+    )
+
+target_include_directories(
+    plog-map-client.exe
+    PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
     )
 
 target_compile_features(
