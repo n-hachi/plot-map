@@ -36,3 +36,8 @@ endif()
 
 # The compiled library code is here
 add_subdirectory(src)
+
+# Testing only available if this is the main app
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    add_subdirectory(tests)
+endif()
