@@ -8,7 +8,9 @@
 
 std::string appname;
 
-void Usage(void) { std::cout << "Usage: " << appname << std::endl; }
+void Usage(void) {
+    std::cout << "Usage: " << appname << " [OPTION]" << std::endl;
+}
 void Version(void) {
     std::cout << appname << " " << PROJECT_VERSION << std::endl
               << "commit : " << COMMIT_HASH << std::endl;
