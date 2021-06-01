@@ -17,6 +17,9 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
     include(cmake/add_FetchContent_MakeAvailable.cmake)
 endif()
 
+# Accumulator library
+find_package(Boost REQUIRED)
+
 # Only do following if this is the main project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
@@ -30,3 +33,6 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     add_subdirectory(app)
 
 endif()
+
+# The compiled library code is here
+add_subdirectory(src)
