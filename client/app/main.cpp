@@ -7,9 +7,10 @@
 #include "version.h"
 
 std::string appname;
+std::string filename;
 
 void Usage(void) {
-    std::cout << "Usage: " << appname << " [OPTION]" << std::endl;
+    std::cout << "Usage: " << appname << " [OPTION] file" << std::endl;
 }
 void Version(void) {
     std::cout << appname << " " << PROJECT_VERSION << std::endl
@@ -33,6 +34,12 @@ int main(int argc, char* argv[]) {
                 std::exit(EXIT_FAILURE);
         }
     }
+
+    if (optind >= argc) {
+        Usage();
+        std::exit(EXIT_FAILURE);
+    }
+    filename = argv[optind];
 
     return 0;
 }
