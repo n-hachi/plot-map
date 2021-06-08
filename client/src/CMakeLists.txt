@@ -5,9 +5,16 @@ FetchContent_Declare(
     )
 FetchContent_MakeAvailable(rapidxml)
 
+set(HEADER_LIST "${PROJECT_SOURCE_DIR}/include/plot/lib.hpp")
 
 # Make an automatic library
-add_library(plotmap_client lib.cpp)
+add_library(plotmap_client lib.cpp ${HEADER_LIST})
+
+# This library depends repositories include and rapidxml
+target_include_directories(plotmap_client PUBLIC
+    ../include
+    ${rapidxml_SOURCE_DIR}
+    )
 
 # This depends on (header only) boost
 target_link_libraries(plotmap_client PRIVATE Boost::boost)
