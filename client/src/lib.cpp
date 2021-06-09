@@ -5,11 +5,14 @@
 
 #include "rapidxml.hpp"
 
-GpsDatum::GpsDatum() {}
+GpsData::GpsData() {}
 
-GpsContainer::GpsContainer() {}
+void GpsData::ParseNode(rapidxml::xml_node<> *node) {
+    char *ptr = node->first_node("ele")->value();
+    elevation_ = std::stod(ptr);
+}
 
-void GpsContainer::Parse(std::istream *in) {
+void GpsData::Parse(std::istream *in) {
     // Read xml data from istream
     std::istreambuf_iterator<char> it{*in};
     std::vector<char> buf(it, std::istreambuf_iterator<char>());
@@ -20,9 +23,8 @@ void GpsContainer::Parse(std::istream *in) {
     doc.parse<0>(&buf[0]);
 
     // Find trkseg as root node
-    rapidxml::xml_node<> *root_node = doc.first_node("trkseg");
-    for (rapidxml::xml_node<> *trkpt_node = root_node->first_node("trkpt");
-         trkpt_node; trkpt_node = trkpt_node->next_sibling()) {
-        std::cout << trkpt_node;
-    }
+    rapidxml::xml_node<> *root_node = doc.first_node("trkpt");
+
+    // Parse root_node
+    ParseNode(root_node);
 }
