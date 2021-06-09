@@ -10,6 +10,8 @@ class GpsData {
    public:
     GpsData();
     void Parse(std::istream *in);
+    const double latitude() { return latitude_; };
+    const double longitude() { return longitude_; };
     const double elevation() { return elevation_; };
 
    private:

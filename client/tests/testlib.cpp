@@ -4,7 +4,7 @@
 
 #include "plot/lib.hpp"
 
-TEST_CASE("Parse test", "[main]") {
+TEST_CASE("GpsData Parse", "[gps]") {
     std::istringstream s1(
         u8R"##(
       <trkpt lat="47.644548" lon="-122.326897">
@@ -14,5 +14,7 @@ TEST_CASE("Parse test", "[main]") {
 )##");
     GpsData data;
     data.Parse(&s1);
+    REQUIRE(data.latitude() == Approx(47.644548).epsilon(1e-4));
+    REQUIRE(data.longitude() == Approx(-122.326897).epsilon(1e-4));
     REQUIRE(data.elevation() == Approx(4.46).epsilon(1e-4));
 }

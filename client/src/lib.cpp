@@ -8,8 +8,17 @@
 GpsData::GpsData() {}
 
 void GpsData::ParseNode(rapidxml::xml_node<> *node) {
-    char *ptr = node->first_node("ele")->value();
+    char *ptr = node->first_attribute("lat")->value();
+    latitude_ = std::stod(ptr);
+
+    ptr = node->first_attribute("lon")->value();
+    longitude_ = std::stod(ptr);
+
+    ptr = node->first_node("ele")->value();
     elevation_ = std::stod(ptr);
+
+    ptr = node->first_node("time")->value();
+    datetime_ = std::string(ptr);
 }
 
 void GpsData::Parse(std::istream *in) {
