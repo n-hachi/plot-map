@@ -41,3 +41,27 @@ void GpsData::Parse(std::istream *in) {
     // Parse root_node
     ParseNode(root_node);
 }
+
+GpsDataSeg::GpsDataSeg() {}
+
+void GpsDataSeg::Parse(std::istream *in) {
+    // Read xml data from istream
+    std::istreambuf_iterator<char> it{*in};
+    std::vector<char> buf(it, std::istreambuf_iterator<char>());
+    buf.push_back('\0');
+
+    // Parse the buffer using the xml istream into variable doc
+    rapidxml::xml_document<> doc;
+    doc.parse<0>(&buf[0]);
+
+    // Find trkseg as root node
+    rapidxml::xml_node<> *root_node = doc.first_node("trkseg");
+
+    // Iterator over the trkpt
+    for (rapidxml::xml_node<> *trkpt = root_node->first_node("trkpt"); trkpt;
+         trkpt = trkpt->next_sibling()) {
+        GpsData data;
+        data.ParseNode(trkpt);
+        vec_.push_back(data);
+    }
+}

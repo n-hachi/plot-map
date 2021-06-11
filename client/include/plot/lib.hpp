@@ -11,6 +11,7 @@ class GpsData {
    public:
     GpsData();
     void Parse(std::istream *in);
+    void ParseNode(rapidxml::xml_node<> *node);
     const double latitude() { return latitude_; };
     const double longitude() { return longitude_; };
     const double elevation() { return elevation_; };
@@ -22,8 +23,16 @@ class GpsData {
     double elevation_;
     std::string datetime_;
     std::tm time_;
+};
 
-    void ParseNode(rapidxml::xml_node<> *node);
+class GpsDataSeg {
+   public:
+    GpsDataSeg();
+    void Parse(std::istream *in);
+    const std::size_t size() { return vec_.size(); };
+
+   private:
+    std::vector<GpsData> vec_;
 };
 
 #endif

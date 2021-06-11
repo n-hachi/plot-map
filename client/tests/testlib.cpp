@@ -24,3 +24,23 @@ TEST_CASE("GpsData Parse", "[gps]") {
     REQUIRE(data.time().tm_min == 37);
     REQUIRE(data.time().tm_sec == 26);
 }
+
+TEST_CASE("GpsDataSeg Parse", "[gps]") {
+    std::istringstream s1(
+        u8R"##(
+<trkseg>
+    <trkpt lat="35.676502228" lon="139.756057739">
+        <ele>17.185059</ele>
+        <time>2012-08-15T03:07:12Z</time>
+        <desc>Lat.=35.676502, Long.=139.756058, Alt.=17.185059m, Speed=0.000000Km/h</desc>
+        <extensions>
+            <mytracks:speed>0</mytracks:speed>
+            <mytracks:length>0</mytracks:length>
+        </extensions>
+    </trkpt>
+</trkseg>
+)##");
+    GpsDataSeg seg;
+    seg.Parse(&s1);
+    REQUIRE(seg.size() == 1);
+}
