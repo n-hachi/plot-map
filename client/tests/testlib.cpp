@@ -17,4 +17,10 @@ TEST_CASE("GpsData Parse", "[gps]") {
     REQUIRE(data.latitude() == Approx(47.644548).epsilon(1e-4));
     REQUIRE(data.longitude() == Approx(-122.326897).epsilon(1e-4));
     REQUIRE(data.elevation() == Approx(4.46).epsilon(1e-4));
+    REQUIRE(data.time().tm_year == 2009 - 1900);
+    REQUIRE(data.time().tm_mon == 10 - 1);
+    REQUIRE(data.time().tm_mday == 17);
+    REQUIRE(data.time().tm_hour == 18);
+    REQUIRE(data.time().tm_min == 37);
+    REQUIRE(data.time().tm_sec == 26);
 }
