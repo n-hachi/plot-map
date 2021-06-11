@@ -1,6 +1,8 @@
 #include "plot/lib.hpp"
 
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 #include "rapidxml.hpp"
@@ -19,6 +21,8 @@ void GpsData::ParseNode(rapidxml::xml_node<> *node) {
 
     ptr = node->first_node("time")->value();
     datetime_ = std::string(ptr);
+    std::istringstream ss(ptr);
+    ss >> std::get_time(&time_, "%Y-%m-%dT%H:%M:%SZ");
 }
 
 void GpsData::Parse(std::istream *in) {
