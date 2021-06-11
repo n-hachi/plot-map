@@ -43,4 +43,15 @@ TEST_CASE("GpsDataSeg Parse", "[gps]") {
     GpsDataSeg seg;
     seg.Parse(&s1);
     REQUIRE(seg.size() == 1);
+
+    GpsData data = seg[0];
+    REQUIRE(data.latitude() == Approx(35.67650228).epsilon(1e-4));
+    REQUIRE(data.longitude() == Approx(139.756067739).epsilon(1e-4));
+    REQUIRE(data.elevation() == Approx(17.185059).epsilon(1e-4));
+    REQUIRE(data.time().tm_year == 2012 - 1900);
+    REQUIRE(data.time().tm_mon == 8 - 1);
+    REQUIRE(data.time().tm_mday == 15);
+    REQUIRE(data.time().tm_hour == 3);
+    REQUIRE(data.time().tm_min == 7);
+    REQUIRE(data.time().tm_sec == 12);
 }

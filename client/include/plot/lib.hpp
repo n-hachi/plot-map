@@ -30,6 +30,7 @@ class GpsDataSeg {
     GpsDataSeg();
     void Parse(std::istream *in);
     const std::size_t size() { return vec_.size(); };
+    GpsData operator[](int i) const;
 
    private:
     std::vector<GpsData> vec_;

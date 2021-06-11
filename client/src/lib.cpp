@@ -65,3 +65,5 @@ void GpsDataSeg::Parse(std::istream *in) {
         vec_.push_back(data);
     }
 }
+
+GpsData GpsDataSeg::operator[](int i) const { return vec_[i]; };
