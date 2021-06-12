@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 
+#include "plot/xml.hpp"
 #include "rapidxml.hpp"
 
 GpsData::GpsData() {}
@@ -44,6 +45,16 @@ void GpsData::Parse(std::istream *in) {
 
 GpsDataSeg::GpsDataSeg() {}
 
+void GpsDataSeg::ParseNode(rapidxml::xml_node<> *node) {
+    // Iterator over the trkpt
+    for (rapidxml::xml_node<> *trkpt = node->first_node("trkpt"); trkpt;
+         trkpt = trkpt->next_sibling()) {
+        GpsData data;
+        data.ParseNode(trkpt);
+        vec_.push_back(data);
+    }
+}
+
 void GpsDataSeg::Parse(std::istream *in) {
     // Read xml data from istream
     std::istreambuf_iterator<char> it{*in};
@@ -55,15 +66,10 @@ void GpsDataSeg::Parse(std::istream *in) {
     doc.parse<0>(&buf[0]);
 
     // Find trkseg as root node
-    rapidxml::xml_node<> *root_node = doc.first_node("trkseg");
+    rapidxml::xml_node<> *trkseg = doc.first_node("trkseg");
 
-    // Iterator over the trkpt
-    for (rapidxml::xml_node<> *trkpt = root_node->first_node("trkpt"); trkpt;
-         trkpt = trkpt->next_sibling()) {
-        GpsData data;
-        data.ParseNode(trkpt);
-        vec_.push_back(data);
-    }
+    // Parse root_node
+    ParseNode(trkseg);
 }
 
 GpsData GpsDataSeg::operator[](int i) const { return vec_[i]; };

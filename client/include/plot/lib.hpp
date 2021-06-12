@@ -29,6 +29,7 @@ class GpsDataSeg {
    public:
     GpsDataSeg();
     void Parse(std::istream *in);
+    void ParseNode(rapidxml::xml_node<> *node);
     const std::size_t size() { return vec_.size(); };
     GpsData operator[](int i) const;
 

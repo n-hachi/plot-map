@@ -5,10 +5,17 @@ FetchContent_Declare(
     )
 FetchContent_MakeAvailable(rapidxml)
 
-set(HEADER_LIST "${PROJECT_SOURCE_DIR}/include/plot/lib.hpp")
+set(HEADER_LIST
+    "${PROJECT_SOURCE_DIR}/include/plot/xml.hpp"
+    "${PROJECT_SOURCE_DIR}/include/plot/lib.hpp"
+    )
 
 # Make an automatic library
-add_library(plotmap_client lib.cpp ${HEADER_LIST})
+add_library(plotmap_client
+    xml.cpp
+    lib.cpp
+    ${HEADER_LIST}
+    )
 
 # This library depends repositories include and rapidxml
 target_include_directories(plotmap_client PUBLIC
