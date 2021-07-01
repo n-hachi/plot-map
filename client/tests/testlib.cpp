@@ -1,10 +1,10 @@
-#define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
+
 #include <sstream>
 
 #include "plot/lib.hpp"
 
-TEST_CASE("GpsData Parse", "[gps]") {
+TEST(GpsData_Parse, gps) {
     std::istringstream s1(
         u8R"##(
       <trkpt lat="47.644548" lon="-122.326897">
@@ -14,18 +14,18 @@ TEST_CASE("GpsData Parse", "[gps]") {
 )##");
     GpsData data;
     data.Parse(&s1);
-    REQUIRE(data.latitude() == Approx(47.644548).epsilon(1e-4));
-    REQUIRE(data.longitude() == Approx(-122.326897).epsilon(1e-4));
-    REQUIRE(data.elevation() == Approx(4.46).epsilon(1e-4));
-    REQUIRE(data.time().tm_year == 2009 - 1900);
-    REQUIRE(data.time().tm_mon == 10 - 1);
-    REQUIRE(data.time().tm_mday == 17);
-    REQUIRE(data.time().tm_hour == 18);
-    REQUIRE(data.time().tm_min == 37);
-    REQUIRE(data.time().tm_sec == 26);
+    EXPECT_FLOAT_EQ(data.latitude(), 47.644548);
+    EXPECT_FLOAT_EQ(data.longitude(), -122.326897);
+    EXPECT_FLOAT_EQ(data.elevation(), 4.46);
+    EXPECT_EQ(data.time().tm_year, 2009 - 1900);
+    EXPECT_EQ(data.time().tm_mon, 10 - 1);
+    EXPECT_EQ(data.time().tm_mday, 17);
+    EXPECT_EQ(data.time().tm_hour, 18);
+    EXPECT_EQ(data.time().tm_min, 37);
+    EXPECT_EQ(data.time().tm_sec, 26);
 }
 
-TEST_CASE("GpsDataSeg Parse", "[gps]") {
+TEST(GpsDataSeg_Parse, gps) {
     std::istringstream s1(
         u8R"##(
 <trkseg>
@@ -42,16 +42,16 @@ TEST_CASE("GpsDataSeg Parse", "[gps]") {
 )##");
     GpsDataSeg seg;
     seg.Parse(&s1);
-    REQUIRE(seg.size() == 1);
+    EXPECT_EQ(seg.size(), 1);
 
     GpsData data = seg[0];
-    REQUIRE(data.latitude() == Approx(35.67650228).epsilon(1e-4));
-    REQUIRE(data.longitude() == Approx(139.756067739).epsilon(1e-4));
-    REQUIRE(data.elevation() == Approx(17.185059).epsilon(1e-4));
-    REQUIRE(data.time().tm_year == 2012 - 1900);
-    REQUIRE(data.time().tm_mon == 8 - 1);
-    REQUIRE(data.time().tm_mday == 15);
-    REQUIRE(data.time().tm_hour == 3);
-    REQUIRE(data.time().tm_min == 7);
-    REQUIRE(data.time().tm_sec == 12);
+    EXPECT_FLOAT_EQ(data.latitude(), 35.67650228);
+    EXPECT_FLOAT_EQ(data.longitude(), 139.756067739);
+    EXPECT_FLOAT_EQ(data.elevation(), 17.185059);
+    EXPECT_EQ(data.time().tm_year, 2012 - 1900);
+    EXPECT_EQ(data.time().tm_mon, 8 - 1);
+    EXPECT_EQ(data.time().tm_mday, 15);
+    EXPECT_EQ(data.time().tm_hour, 3);
+    EXPECT_EQ(data.time().tm_min, 7);
+    EXPECT_EQ(data.time().tm_sec, 12);
 }

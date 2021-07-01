@@ -1,18 +1,33 @@
 FetchContent_Declare(
-    catch
-    GIT_REPOSITORY https://github.com/catchorg/catch2.git
-    GIT_TAG v2.13.6
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.11.0
     )
-FetchContent_MakeAvailable(catch)
+FetchContent_MakeAvailable(googletest)
 
-# Tests need to added as executables first
-add_executable(testlib testlib.cpp)
+# GoogleTest requires at least c++11
+set(CMAKE_CXX_STANDARD 11)
 
-# I'm using C++17 in the test
-target_compile_features(testlib PRIVATE cxx_std_11)
+enable_testing()
 
-# Should be linked to the main library
-target_link_libraries(testlib PRIVATE plotmap_client Catch2::Catch2)
+# Function to add passed test name as an executable file to the target of ctest
+function (add_gtest_target test_name)
+    add_executable(${test_name} ${test_name}.cpp)
+    target_link_libraries(${test_name}
+        plotmap_client
+        gtest_main
+        )
+    add_test(
+        NAME ${test_name}
+        COMMAND ./${test_name}
+        )
+endfunction()
 
-# for ctest
-add_test(NAME testlibtest COMMAND testlib)
+# Append test file into following array
+set(gtest_targets
+    testlib
+    )
+
+foreach(target ${gtest_targets})
+    add_gtest_target(${target})
+endforeach()
