@@ -26,6 +26,7 @@ endfunction()
 # Append test file into following array
 set(gtest_targets
     testlib
+    test_xml
     )
 
 foreach(target ${gtest_targets})

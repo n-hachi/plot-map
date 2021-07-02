@@ -1,11 +1,12 @@
-#include <catch2/catch.hpp>
+#include <gtest/gtest.h>
+
 #include <sstream>
 
 #include "plot/lib.hpp"
 #include "plot/xml.hpp"
 #include "rapidxml.hpp"
 
-TEST_CASE("Parse from entire format", "[gps]") {
+TEST(SearchTrksegNode, xml) {
     std::istringstream s1(
         u8R"##(
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -29,9 +30,9 @@ TEST_CASE("Parse from entire format", "[gps]") {
 )##");
 
     rapidxml::xml_node<> *trkseg = search_trkseg_node(&s1);
-    REQUIRE(trkseg != NULL);
+    EXPECT_NE(trkseg, nullptr);
     GpsDataSeg seg;
     seg.ParseNode(trkseg);
 
-    // REQIRE(seg.size() == 1);
+    EXPECT_EQ(seg.size(), 1);
 }
