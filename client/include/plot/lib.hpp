@@ -16,6 +16,7 @@ class GpsData {
     const double longitude() { return longitude_; };
     const double elevation() { return elevation_; };
     const std::tm time() { return time_; };
+    const time_t Mktime() { return std::mktime(&time_); };
 
    private:
     double latitude_;
