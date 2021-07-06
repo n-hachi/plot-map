@@ -8,7 +8,7 @@ service RouteGuide {
     //
     // Accepts a stream of Points on a route being traversed, returning a
     // RouteSummary when traversal is completed.
-    rpc RecordRoute(stream Point) returns (RouteSummary) {}
+    rpc RecordRoute(stream TruckPoint) returns (Empty) {}
 }
 
 // Points are represented as latitude-longitude pairs in the E7 representation
@@ -36,6 +36,8 @@ message TruckPoint {
     string time = 3;
 
     // The value move object speed in Km/h.
-    optional double speed = 4;
+    double speed = 4;
 }
 
+// A generic empty message
+message Empty {}
