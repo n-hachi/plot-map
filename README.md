@@ -1,2 +1,2 @@
-plog-map
+plot-map
 ---
