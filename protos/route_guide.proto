@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package routeguide;
+option go_package = "github.com/n-hachi/prot-map/protos/route_guide";
 
 // Interface exported by the server.
 service RouteGuide {
