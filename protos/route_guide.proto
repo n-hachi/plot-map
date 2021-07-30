@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package routeguide;
+option go_package = "github.com/n-hachi/plot-map/protos";
+
+// Interface exported by the server.
+service RouteGuide {
+    // A client-to-server streaming RPC.
+    //
+    // Accepts a stream of Points on a route being traversed, returning a
+    // RouteSummary when traversal is completed.
+    rpc RecordRoute(stream TruckPoint) returns (Empty) {}
+}
+
+// Points are represented as latitude-longitude pairs in the E7 representation
+// (degrees multiplied by 10**7 and rounded to the nearest integer).
+// Latitudes should be in the range +/- 90 degrees and longitude should be in
+// the range +/- 180 degrees (inclusive).
+message Point {
+    int32 latitude = 1;
+    int32 longitude = 2;
+}
+
+// A RouteSummary is received in response to a RecordRoute rpc.
+//
+// It contains the number of individual points received, the number of
+// detected features, and the total distance covered as the cumulative sum of
+// the distance between each point.
+message TruckPoint {
+    // The number of points received.
+    Point location = 1;
+
+    // The number of elevetion.
+    double elevation = 2;
+
+    // The string which describe time.
+    string time = 3;
+
+    // The value move object speed in Km/h.
+    double speed = 4;
+}
+
+// A generic empty message
+message Empty {}
